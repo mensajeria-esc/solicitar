@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domicilio</title>
+    <!-- Enlazar el CSS de Bootstrap desde un CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function enviarWhatsApp(event) {
+            event.preventDefault(); // Evita que el formulario se envíe normalmente
+            // Obtener los datos del formulario
+            var nombre = document.getElementById('nombre').value;
+            var telefono = document.getElementById('telefono').value;
+            var direccion_entrega = document.getElementById('direccion_entrega').value;
+            var direccion_recogida = document.getElementById('direccion_recogida').value;
+            var mensaje_adicional = document.getElementById('mensaje_adicional').value.trim(); // Quitar espacios al principio y al final
+
+            // Obtener el valor del radio seleccionado
+            var tipo_domicilio = document.querySelector('input[name="tipo_domicilio"]:checked');
+            var tipo_domicilio_text = tipo_domicilio ? tipo_domicilio.nextElementSibling.textContent.trim() : 'No seleccionado';
+
+            // Construir el mensaje
+            var mensaje = `*Domicilio*\n\nNombre: ${nombre}\nNúmero Teléfono: ${telefono}\nDirección de Entrega: ${direccion_entrega}\nDirección de Recogida: ${direccion_recogida}`;
+            
+            mensaje += `\nTipo de Domicilio: ${tipo_domicilio_text}`;
+            
+            // Añadir el mensaje adicional solo si no está vacío
+            if (mensaje_adicional) {
+                mensaje += `\nMensaje Adicional: ${mensaje_adicional}`;
+            }
+            
+            // Codificar el mensaje para la URL
+            var mensajeCodificado = encodeURIComponent(mensaje);
+
+            // Número de WhatsApp del destinatario (en formato internacional)
+            var numeroWhatsApp = '573163748711'; 
+
+            // Construir la URL de WhatsApp
+            var urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+
+            // Abrir la URL en una nueva ventana o pestaña
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-2">
+        <h2>Domicilio</h2>
+        <form onsubmit="enviarWhatsApp(event)">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Número teléfono ó WhatsApp:</label>
+                <input name="telefono" type="number" class="form-control" id="telefono" placeholder="Ingrese su número" 
+                       required step="1" min="0">
+            </div>
+            <div class="form-group">
+                <label for="direccion_recogida">Dirección de Recogida:</label>
+                <input name="direccion_recogida" type="text" class="form-control" id="direccion_recogida" placeholder="Ingrese dirección recogida" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion_entrega">Dirección de Entrega:</label>
+                <input name="direccion_entrega" type="text" class="form-control" id="direccion_entrega" placeholder="Ingrese dirección entrega" required>
+            </div>
+            <div class="form-group">
+                <label>Tipo de Domicilio (Dar click encima):</label>
+                <div class="ml-3"> <!-- Añadir margen izquierdo -->
+                    <div class="form-check">
+                        <input name="tipo_domicilio" class="form-check-input" type="radio" id="opcion1" value="Muy Urgente (10 a 30 min)">
+                        <label style="color: red" class="form-check-label" for="opcion1">
+                            Muy Urgente (10 a 30 min)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input name="tipo_domicilio" class="form-check-input" type="radio" id="opcion2" value="No tan urgente (30 a 60 min)">
+                        <label style="color: rgb(5, 174, 90)" class="form-check-label" for="opcion2">
+                            No tan urgente (30 a 60 min)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input name="tipo_domicilio" class="form-check-input" type="radio" id="opcion3" value="Transcurso del día (1 a 4 h)">
+                        <label style="color: rgb(0, 85, 255)" class="form-check-label" for="opcion3">
+                            Transcurso del día (1 a 4 h)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="mensaje_adicional">Opcional (Describir paquete):</label>
+                    <input name="mensaje_adicional" type="text" class="form-control" id="mensaje_adicional" placeholder="Opcional">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Domicilio</button>
+        </form>
+    </div>
+
+    <!-- Enlazar los archivos JS de Bootstrap desde un CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
